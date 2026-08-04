@@ -7,6 +7,9 @@ use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
+use App\Http\Resources\ProductResource;
+
 
 class ProductController extends Controller
 {
@@ -23,25 +26,27 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-     //
+        $product = Product::create($request->validated());
+        return response()->json([
+            'status' => true,
+            'message' => 'Product created successfully',
+            'data' => new ProductResource($product),
+        ], Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(ProductRequest $request, string $id)
     {
-        //
-    }
+        $product = Product::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-      //
+        $product->update($request->validated());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Product updated successfully',
+            'data' => new ProductResource($product),
+        ], Response::HTTP_OK);
     }
 
     /**
