@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use Illuminate\Http\Response;
-use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
-
 
 class ProductController extends Controller
 {
@@ -52,9 +50,13 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'Product deleted successfully',
+        ], Response::HTTP_OK);
     }
         
 }
