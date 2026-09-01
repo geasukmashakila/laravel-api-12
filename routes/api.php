@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\KategoriController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -16,4 +17,5 @@ Route::get('/product', [ProductController::class, 'index'])->name('product');
 Route::post('/product', [ProductController::class, 'store'])->name('product.store');
 Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
 Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+Route::apiResource('kategoris', KategoriController::class);
 
